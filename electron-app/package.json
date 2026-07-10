@@ -2,6 +2,7 @@
   "name": "clip-sync",
   "version": "1.0.0",
   "description": "Clipboard sync between PC and phone",
+  "repository": "https://github.com/DALI951/clip-sync",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
