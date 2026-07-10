@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build
 
 on:
   push:
@@ -11,9 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: clip-sync-android
 
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +26,7 @@ jobs:
 
       - name: Generate Gradle Wrapper
         run: gradle wrapper --gradle-version 8.5
+        working-directory: clip-sync-android
 
       - name: Generate debug keystore
         run: |
@@ -36,11 +34,22 @@ jobs:
             -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass android -keypass android \
             -dname "CN=Android Debug,O=Android,C=US"
+        working-directory: clip-sync-android
 
       - name: Build signed APK
         run: ./gradlew assembleRelease
+        working-directory: clip-sync-android
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/clip-sync-android/debug.keystore
+
+      - name: Package PC app
+        run: |
+          mkdir -p dist
+          zip -r dist/clip-sync-pc.zip \
+            server.js pc-service.js install-service.js uninstall-service.js \
+            package.json package-lock.json start.bat \
+            public/ .gitignore README.md \
+            -x "node_modules/*"
 
       - name: Tag version
         id: tag
@@ -53,10 +62,19 @@ jobs:
           name: "ClipSync v1.0.${{ github.run_number }}"
           body: |
             Automated build from commit ${{ github.sha }}
-            
-            ## How to install
-            1. Download the APK below
-            2. On your phone, enable "Install from unknown sources"
-            3. Open the APK file and install
-          files: clip-sync-android/app/build/outputs/apk/release/app-release.apk
+
+            ## Downloads
+
+            - **clip-sync-pc.zip** — PC server (unzip, double-click `start.bat`)
+            - **app-release.apk** — Android app (install on phone)
+
+            ## How to use
+
+            1. Download **clip-sync-pc.zip**, unzip on your PC, double-click `start.bat`
+            2. Install the APK on your phone
+            3. Open the phone app, enter your PC's IP address, tap Connect
+            4. Clipboard auto-syncs both ways
+          files: |
+            dist/clip-sync-pc.zip
+            clip-sync-android/app/build/outputs/apk/release/app-release.apk
           make_latest: true
