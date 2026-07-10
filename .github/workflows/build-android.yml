@@ -5,6 +5,9 @@ on:
     branches: [master]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,11 +30,33 @@ jobs:
       - name: Generate Gradle Wrapper
         run: gradle wrapper --gradle-version 8.5
 
-      - name: Build APK
-        run: ./gradlew assembleRelease
+      - name: Generate debug keystore
+        run: |
+          keytool -genkey -v -keystore debug.keystore -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US"
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Build signed APK
+        run: ./gradlew assembleRelease
+        env:
+          KEYSTORE_PATH: ${{ github.workspace }}/clip-sync-android/debug.keystore
+
+      - name: Tag version
+        id: tag
+        run: echo "version=v1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: clip-sync-android
-          path: clip-sync-android/app/build/outputs/apk/release/app-release-unsigned.apk
+          tag_name: ${{ steps.tag.outputs.version }}
+          name: "ClipSync v1.0.${{ github.run_number }}"
+          body: |
+            Automated build from commit ${{ github.sha }}
+            
+            ## How to install
+            1. Download the APK below
+            2. On your phone, enable "Install from unknown sources"
+            3. Open the APK file and install
+          files: clip-sync-android/app/build/outputs/apk/release/app-release.apk
+          make_latest: true
