@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  android:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,23 +42,40 @@ jobs:
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/clip-sync-android/debug.keystore
 
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: clip-sync-android/app/build/outputs/apk/release/app-release.apk
+
+  pc:
+    runs-on: windows-latest
+    needs: android
+
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Build Electron PC app
-        run: |
-          cd electron-app
-          npm install
-          sudo apt-get update -qq && sudo apt-get install -y -qq wine64 xvfb
-          xvfb-run npx electron-builder --win
+        run: npm install && npx electron-builder --win
+        working-directory: electron-app
         env:
           GH_TOKEN: ${{ github.token }}
 
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release-apk
+          path: apk
+
       - name: Tag version
         id: tag
-        run: echo "version=v1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
+        run: echo "version=v1.0.${{ github.run_number }}" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        shell: pwsh
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -82,5 +99,5 @@ jobs:
             5. Clipboard auto-syncs both ways. No IPs, no links, no browser.
           files: |
             dist-electron/*.exe
-            clip-sync-android/app/build/outputs/apk/release/app-release.apk
+            apk/app-release.apk
           make_latest: true
