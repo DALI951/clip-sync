@@ -3,7 +3,6 @@ package com.clipsync.app
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.app.Service
 import androidx.core.app.NotificationCompat
@@ -55,8 +54,12 @@ class ClipboardService : Service() {
     }
 
     private fun connectSocket() {
-        val serverUrl = getSharedPreferences("clipsync", MODE_PRIVATE)
-            .getString("server_url", "http://192.168.1.100:3000") ?: "http://192.168.1.100:3000"
+        val prefs = getSharedPreferences("clipsync", MODE_PRIVATE)
+        val ip = prefs.getString("server_ip", "") ?: ""
+        val port = prefs.getString("server_port", "3000") ?: "3000"
+        if (ip.isEmpty()) return
+
+        val serverUrl = "http://$ip:$port"
 
         try {
             val opts = IO.Options.builder()
@@ -89,7 +92,7 @@ class ClipboardService : Service() {
             }
 
             socket?.connect()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             updateNotification("Connection failed - retrying...")
         }
     }

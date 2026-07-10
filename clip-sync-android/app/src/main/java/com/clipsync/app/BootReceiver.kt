@@ -9,11 +9,9 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             val prefs = context.getSharedPreferences("clipsync", Context.MODE_PRIVATE)
-            val url = prefs.getString("server_url", "")
-            if (!url.isNullOrEmpty()) {
-                val serviceIntent = Intent(context, ClipboardService::class.java).apply {
-                    action = "START"
-                }
+            val ip = prefs.getString("server_ip", "")
+            if (!ip.isNullOrEmpty()) {
+                val serviceIntent = Intent(context, ClipboardService::class.java).apply { action = "START" }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     context.startForegroundService(serviceIntent)
                 } else {

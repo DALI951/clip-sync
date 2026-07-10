@@ -3,7 +3,7 @@ const path = require("path");
 
 const svc = new Service({
   name: "ClipSync",
-  script: path.join(__dirname, "pc-service.js"),
+  script: path.join(__dirname, "server.js"),
 });
 
 svc.on("uninstall", () => {

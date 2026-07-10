@@ -4,9 +4,8 @@ const path = require("path");
 const svc = new Service({
   name: "ClipSync",
   description: "Clipboard sync between PC and phone",
-  script: path.join(__dirname, "pc-service.js"),
+  script: path.join(__dirname, "server.js"),
   nodeOptions: [],
-  env: [{ name: "CLIPSYNC_SERVER", value: "http://localhost:3000" }],
 });
 
 svc.on("install", () => {
@@ -16,7 +15,7 @@ svc.on("install", () => {
 });
 
 svc.on("alreadyinstalled", () => {
-  console.log("ClipSync service is already installed. Starting...");
+  console.log("ClipSync service already installed. Starting...");
   svc.start();
 });
 

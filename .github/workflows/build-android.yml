@@ -46,9 +46,9 @@ jobs:
         run: |
           mkdir -p dist
           zip -r dist/clip-sync-pc.zip \
-            server.js pc-service.js install-service.js uninstall-service.js \
+            server.js install-service.js uninstall-service.js \
             package.json package-lock.json start.bat \
-            public/ .gitignore README.md \
+            .gitignore README.md \
             -x "node_modules/*"
 
       - name: Tag version
@@ -72,8 +72,8 @@ jobs:
 
             1. Download **clip-sync-pc.zip**, unzip on your PC, double-click `start.bat`
             2. Install the APK on your phone
-            3. Open the phone app, enter your PC's IP address, tap Connect
-            4. Clipboard auto-syncs both ways
+            3. Open the phone app, tap **Scan for PC**
+            4. Select your PC from the list — done! Clipboard auto-syncs both ways
           files: |
             dist/clip-sync-pc.zip
             clip-sync-android/app/build/outputs/apk/release/app-release.apk
