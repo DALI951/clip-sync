@@ -51,7 +51,8 @@ jobs:
         run: |
           cd electron-app
           npm install
-          npx electron-builder --win --portable
+          sudo apt-get update -qq && sudo apt-get install -y -qq wine64
+          npx electron-builder --win
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -69,12 +70,12 @@ jobs:
 
             ## Downloads
 
-            - **ClipSync Setup.exe** — PC app (installer, runs in system tray)
+            - **ClipSync.exe** — PC app (portable, runs in system tray)
             - **app-release.apk** — Android app (install on phone)
 
             ## How to use
 
-            1. Download and run **ClipSync Setup.exe** on your PC
+            1. Download and run **ClipSync.exe** on your PC
             2. Install the APK on your phone
             3. Open both apps — they find each other automatically
             4. On first use: give your PC a name, then tap your phone to pair
