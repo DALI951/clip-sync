@@ -79,6 +79,17 @@ function startDiscovery() {
     setInterval(() => {
       const msg = Buffer.from(`CLIPSYNC_PC:${config.deviceName}`);
       udp.send(msg, 0, msg.length, PORT + 1, "255.255.255.255");
+      // Also try subnet broadcast for each network interface
+      const interfaces = os.networkInterfaces();
+      for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]) {
+          if (iface.family === "IPv4" && !iface.internal) {
+            const parts = iface.address.split(".");
+            const subnet = parts[0] + "." + parts[1] + "." + parts[2] + ".255";
+            udp.send(msg, 0, msg.length, PORT + 1, subnet);
+          }
+        }
+      }
     }, 5000);
   });
 

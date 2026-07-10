@@ -118,10 +118,11 @@ class MainActivity : AppCompatActivity() {
 
         Thread {
             try {
+                val addr = InetAddress.getByName("0.0.0.0")
                 discoverySocket = DatagramSocket(null).apply {
                     reuseAddress = true
                     setSoTimeout(0)
-                    bind(null)
+                    bind(java.net.InetSocketAddress(addr, 3001))
                 }
 
                 val buffer = ByteArray(1024)
