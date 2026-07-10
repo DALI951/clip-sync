@@ -1,10 +1,8 @@
 package com.clipsync.app
 
 import android.Manifest
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.MulticastLock
@@ -29,7 +27,6 @@ import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 import java.net.NetworkInterface
-import java.net.SocketTimeoutException
 import java.net.URI
 
 class MainActivity : AppCompatActivity() {
@@ -69,10 +66,8 @@ class MainActivity : AppCompatActivity() {
         clipList.layoutManager = LinearLayoutManager(this)
         clipList.adapter = adapter
 
-        // Get device name
         deviceName = getDeviceName()
 
-        // Acquire multicast lock
         val wifi = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         multicastLock = wifi.createMulticastLock("clipsync-discovery")
         multicastLock?.setReferenceCounted(true)
@@ -92,8 +87,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         requestNotificationPermission()
-
-        // Start listening for PCs
         startListening()
     }
 
@@ -143,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                             val pcIp = packet.address.hostAddress ?: continue
                             val pcPort = "3000"
 
-                            // Send response
                             try {
                                 val respData = "CLIPSYNC_PHONE:$deviceName".toByteArray(Charsets.UTF_8)
                                 val respPacket = DatagramPacket(respData, respData.size, packet.address, packet.port)
@@ -198,3 +190,5 @@ class MainActivity : AppCompatActivity() {
 
     data class DiscoveredPC(val name: String, val ip: String, val port: String)
 }
+
+data class ClipItem(val text: String, val source: String, val timestamp: String)
