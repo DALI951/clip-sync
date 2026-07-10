@@ -1,0 +1,18 @@
+{
+  "name": "clip-sync",
+  "version": "1.0.0",
+  "description": "Clipboard sync between PC and phone",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "service": "node pc-service.js",
+    "install-service": "node install-service.js",
+    "uninstall-service": "node uninstall-service.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "node-windows": "^0.1.14"
+  }
+}

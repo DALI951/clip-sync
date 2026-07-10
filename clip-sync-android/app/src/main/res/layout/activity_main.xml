@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0F172A"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ClipSync"
+        android:textColor="#818CF8"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stopped"
+        android:textColor="#F87171"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/serverInput"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="http://192.168.1.100:3000"
+        android:textColor="#E2E8F0"
+        android:textColorHint="#475569"
+        android:background="@drawable/input_bg"
+        android:paddingHorizontal="14dp"
+        android:inputType="textUri"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/connectBtn"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Test Connection"
+            android:textColor="#0F172A"
+            android:backgroundTint="#818CF8"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/toggleBtn"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Start Sync"
+            android:textColor="#E2E8F0"
+            android:backgroundTint="#334155"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clipboard History"
+        android:textColor="#94A3B8"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/clipList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

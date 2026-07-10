@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#1E293B"
+    android:padding="14dp"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/itemSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PC"
+            android:textColor="#A5B4FC"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:background="#312E81"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/itemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00"
+            android:textColor="#475569"
+            android:textSize="11sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/itemContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clipboard text..."
+        android:textColor="#CBD5E1"
+        android:textSize="14sp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/itemCopyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="Copy"
+        android:textColor="#818CF8"
+        android:textSize="12sp"
+        android:backgroundTint="#818CF820"
+        android:layout_gravity="end"/>
+
+</LinearLayout>
