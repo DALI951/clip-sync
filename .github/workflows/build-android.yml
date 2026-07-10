@@ -51,7 +51,7 @@ jobs:
         run: |
           cd electron-app
           npm install
-          npx electron-builder --win --portable --config.extraMetadata.main=main.js
+          npx electron-builder --win --portable
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -80,6 +80,6 @@ jobs:
             4. On first use: give your PC a name, then tap your phone to pair
             5. Clipboard auto-syncs both ways. No IPs, no links, no browser.
           files: |
-            dist-electron/ClipSync*.exe
+            dist-electron/*.exe
             clip-sync-android/app/build/outputs/apk/release/app-release.apk
           make_latest: true

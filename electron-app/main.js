@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, Notification, nativeImage } = require("electron");
+const { app, BrowserWindow, Tray, Menu, ipcMain, Notification } = require("electron");
 const path = require("path");
 const { Server } = require("socket.io");
 const http = require("http");
@@ -147,17 +147,9 @@ function createWindow() {
 
 // --- Tray ---
 function createTray() {
-  const iconSize = 16;
-  const icon = nativeImage.createEmpty();
-  // Use a simple colored square as tray icon
-  const canvas = Buffer.alloc(iconSize * iconSize * 4);
-  for (let i = 0; i < iconSize * iconSize; i++) {
-    canvas[i * 4] = 129;     // R
-    canvas[i * 4 + 1] = 140; // G
-    canvas[i * 4 + 2] = 248; // B
-    canvas[i * 4 + 3] = 255; // A
-  }
-  const trayIcon = nativeImage.createFromBuffer(canvas, { width: iconSize, height: iconSize });
+  const { nativeImage } = require("electron");
+  const iconData = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMklEQVQ4T2NkYPj/n4EBBJgYKAQMowYMfAgwUhI7jIMiDBgpSTGDAYMGDBowKEIHAAD//wMJFk0RZQAAAABJRU5ErkJggg==";
+  const trayIcon = nativeImage.createFromDataURL("data:image/png;base64," + iconData);
 
   tray = new Tray(trayIcon);
   tray.setToolTip("ClipSync");
