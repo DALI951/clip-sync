@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         val savedUrl = getSharedPreferences("clipsync", MODE_PRIVATE)
             .getString("server_url", "")
-        if (savedUrl.isNotEmpty()) {
+        if (!savedUrl.isNullOrEmpty()) {
             serverInput.setText(savedUrl)
         }
 
