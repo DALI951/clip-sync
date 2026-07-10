@@ -42,14 +42,18 @@ jobs:
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/clip-sync-android/debug.keystore
 
-      - name: Package PC app
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Electron PC app
         run: |
-          mkdir -p dist
-          zip -r dist/clip-sync-pc.zip \
-            server.js install-service.js uninstall-service.js \
-            package.json package-lock.json start.bat \
-            .gitignore README.md \
-            -x "node_modules/*"
+          cd electron-app
+          npm install
+          npx electron-builder --win --portable --config.extraMetadata.main=main.js
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Tag version
         id: tag
@@ -65,16 +69,17 @@ jobs:
 
             ## Downloads
 
-            - **clip-sync-pc.zip** — PC server (unzip, double-click `start.bat`)
+            - **ClipSync Setup.exe** — PC app (installer, runs in system tray)
             - **app-release.apk** — Android app (install on phone)
 
             ## How to use
 
-            1. Download **clip-sync-pc.zip**, unzip on your PC, double-click `start.bat`
+            1. Download and run **ClipSync Setup.exe** on your PC
             2. Install the APK on your phone
-            3. Open the phone app, tap **Scan for PC**
-            4. Select your PC from the list — done! Clipboard auto-syncs both ways
+            3. Open both apps — they find each other automatically
+            4. On first use: give your PC a name, then tap your phone to pair
+            5. Clipboard auto-syncs both ways. No IPs, no links, no browser.
           files: |
-            dist/clip-sync-pc.zip
+            dist-electron/ClipSync*.exe
             clip-sync-android/app/build/outputs/apk/release/app-release.apk
           make_latest: true

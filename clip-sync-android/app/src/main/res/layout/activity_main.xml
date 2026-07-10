@@ -16,66 +16,31 @@
         android:layout_marginBottom="4dp"/>
 
     <TextView
-        android:id="@+id/statusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan for PC..."
-        android:textColor="#94A3B8"
-        android:textSize="13sp"
-        android:layout_marginBottom="12dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <Button
-            android:id="@+id/scanBtn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Scan for PC"
-            android:textColor="#0F172A"
-            android:backgroundTint="#818CF8"
-            android:layout_marginEnd="8dp"/>
-
-        <Button
-            android:id="@+id/toggleBtn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Start Sync"
-            android:textColor="#E2E8F0"
-            android:backgroundTint="#334155"
-            android:layout_marginStart="8dp"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/scanStatus"
+        android:id="@+id/pcNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="#94A3B8"
-        android:textSize="12sp"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="#34D399"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp"/>
 
-    <LinearLayout
-        android:id="@+id/deviceList"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#1E293B"
-        android:padding="4dp"
-        android:visibility="visible"/>
+        android:text="Listening for PC..."
+        android:textColor="#94A3B8"
+        android:textSize="13sp"
+        android:layout_marginBottom="16dp"/>
 
-    <View
+    <Button
+        android:id="@+id/toggleBtn"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#334155"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_height="48dp"
+        android:text="Start Sync"
+        android:textColor="#E2E8F0"
+        android:backgroundTint="#334155"
+        android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,0 +1,37 @@
+{
+  "name": "clip-sync",
+  "version": "1.0.0",
+  "description": "Clipboard sync between PC and phone",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --config"
+  },
+  "build": {
+    "appId": "com.clipsync.app",
+    "productName": "ClipSync",
+    "directories": {
+      "output": "../dist-electron"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*"
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "nsis": {
+      "oneClick": true,
+      "runAfterFinish": true
+    }
+  },
+  "dependencies": {
+    "socket.io": "^4.7.2",
+    "multicast-dns": "^7.2.5"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
